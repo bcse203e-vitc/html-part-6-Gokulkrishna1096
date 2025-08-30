@@ -1,1 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <style>
+    .error { color: red; font-size: 12px; }
+    .success { color: green; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h2>Registration Form</h2>
+  <form id="regForm">
+    <label>Name:</label>
+    <input type="text" id="name"><span class="error" id="nameError"></span><br><br>
 
+    <label>Email:</label>
+    <input type="text" id="email"><span class="error" id="emailError"></span><br><br>
+
+    <label>Password:</label>
+    <input type="password" id="password"><span class="error" id="passError"></span><br><br>
+
+    <button type="submit" id="submitBtn" disabled>Submit</button>
+  </form>
+
+  <script>
+    const name = document.getElementById("name");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const btn = document.getElementById("submitBtn");
+
+    function validateForm() {
+      let valid = true;
+
+      // Name
+      if (name.value.trim() === "") {
+        document.getElementById("nameError").textContent = " Name required";
+        valid = false;
+      } else {
+        document.getElementById("nameError").textContent = "";
+      }
+
+      // Email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.value)) {
+        document.getElementById("emailError").textContent = " Invalid email";
+        valid = false;
+      } else {
+        document.getElementById("emailError").textContent = "";
+      }
+
+      // Password
+      const passRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!passRegex.test(password.value)) {
+        document.getElementById("passError").textContent = " Must be 8+ chars, 1 uppercase, 1 number";
+        valid = false;
+      } else {
+        document.getElementById("passError").textContent = "";
+      }
+
+      btn.disabled = !valid;
+    }
+
+    name.addEventListener("blur", validateForm);
+    email.addEventListener("blur", validateForm);
+    password.addEventListener("blur", validateForm);
+    name.addEventListener("input", validateForm);
+    email.addEventListener("input", validateForm);
+    password.addEventListener("input", validateForm);
+  </script>
+</body>
+</html>
